@@ -2,6 +2,17 @@ import os from 'node:os'
 
 import type { MetricCollector } from './collector.js'
 
+/**
+ * Reports OS-level system metrics: load averages, memory, and uptime.
+ *
+ * **Metrics produced:**
+ * - `systemLoadAvg1m` / `systemLoadAvg5m` / `systemLoadAvg15m` -- OS load averages
+ * - `systemMemoryTotalMb` -- total system memory (MB)
+ * - `systemMemoryFreeMb` -- free system memory (MB)
+ * - `systemUptime` -- OS uptime in seconds
+ *
+ * **Peer dependencies:** none
+ */
 export function systemCollector(): MetricCollector {
   return {
     name: 'system',

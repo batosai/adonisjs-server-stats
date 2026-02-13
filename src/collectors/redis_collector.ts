@@ -1,5 +1,20 @@
 import type { MetricCollector } from './collector.js'
 
+/**
+ * Monitors Redis health, memory, connections, keys, and cache hit rate.
+ *
+ * Uses the AdonisJS Redis service to send `PING`, `INFO`, and `DBSIZE`
+ * commands. Returns safe defaults if Redis is unavailable.
+ *
+ * **Metrics produced:**
+ * - `redisOk` -- `true` if PING returned PONG
+ * - `redisMemoryUsedMb` -- server memory usage (MB)
+ * - `redisConnectedClients` -- connected client count
+ * - `redisKeysCount` -- total keys across all databases
+ * - `redisHitRate` -- cache hit rate (%)
+ *
+ * **Peer dependencies:** `@adonisjs/redis`
+ */
 export function redisCollector(): MetricCollector {
   return {
     name: 'redis',

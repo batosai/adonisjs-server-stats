@@ -2,6 +2,23 @@ import { monitorEventLoopDelay, performance } from 'node:perf_hooks'
 
 import type { MetricCollector } from './collector.js'
 
+/**
+ * Reports Node.js process metrics: CPU, memory, event loop, and uptime.
+ *
+ * Uses `monitorEventLoopDelay` for accurate event loop lag measurement
+ * and `process.cpuUsage()` for CPU percentage calculation.
+ *
+ * **Metrics produced:**
+ * - `nodeVersion` -- Node.js version string
+ * - `uptime` -- process uptime in seconds
+ * - `memHeapUsed` -- V8 heap used (bytes)
+ * - `memHeapTotal` -- V8 heap allocated (bytes)
+ * - `memRss` -- resident set size (bytes)
+ * - `cpuPercent` -- CPU usage (% of one core)
+ * - `eventLoopLag` -- event loop latency (ms)
+ *
+ * **Peer dependencies:** none
+ */
 export function processCollector(): MetricCollector {
   const histogram = monitorEventLoopDelay({ resolution: 20 })
   let lastCpuUsage = process.cpuUsage()

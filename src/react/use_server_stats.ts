@@ -8,6 +8,31 @@ const DEFAULT_STALE_TIMEOUT = 10_000
 const DEFAULT_ENDPOINT = '/admin/api/server-stats'
 const DEFAULT_CHANNEL = 'admin/server-stats'
 
+/**
+ * React hook for consuming server stats in custom UIs.
+ *
+ * Handles the full data lifecycle:
+ * 1. Fetches the initial snapshot from the HTTP endpoint via axios
+ * 2. Subscribes to the Transmit SSE channel for real-time updates
+ * 3. Maintains a rolling history buffer for sparkline charts
+ * 4. Detects stale connections (no update within `staleTimeout`)
+ *
+ * @returns An object with:
+ * - `stats` -- latest {@link ServerStats} snapshot, or `null` before first fetch
+ * - `stale` -- `true` if no update received within the stale timeout
+ * - `history` -- rolling array of past snapshots (for sparklines)
+ *
+ * @example
+ * ```tsx
+ * import { useServerStats } from 'adonisjs-server-stats/react'
+ *
+ * function Dashboard() {
+ *   const { stats, stale } = useServerStats()
+ *   if (!stats) return <div>Loading...</div>
+ *   return <div>CPU: {stats.cpuPercent.toFixed(1)}%</div>
+ * }
+ * ```
+ */
 export function useServerStats(opts?: UseServerStatsOptions) {
   const endpoint = opts?.endpoint ?? DEFAULT_ENDPOINT
   const channel = opts?.channel ?? DEFAULT_CHANNEL

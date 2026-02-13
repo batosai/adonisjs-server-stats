@@ -2,5 +2,15 @@ export { defineConfig } from './define_config.js'
 export { StatsEngine } from './engine/stats_engine.js'
 export { RequestMetrics } from './engine/request_metrics.js'
 export type { MetricCollector } from './collectors/collector.js'
-export type { ServerStats, ServerStatsConfig, LogStats } from './types.js'
-export type { DebugPane, DebugPaneColumn, DebugPaneFormatType } from './debug/types.js'
+export type { MetricValue, ServerStats, ServerStatsConfig, LogStats, DevToolbarOptions } from './types.js'
+export type {
+  DebugPane,
+  DebugPaneColumn,
+  DebugPaneFormatType,
+  DebugPaneSearch,
+  BadgeColor,
+  QueryRecord,
+  EventRecord,
+  RouteRecord,
+  DevToolbarConfig,
+} from './debug/types.js'

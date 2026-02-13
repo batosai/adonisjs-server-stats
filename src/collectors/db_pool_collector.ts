@@ -1,9 +1,40 @@
 import type { MetricCollector } from './collector.js'
 
+/**
+ * Options for {@link dbPoolCollector}.
+ */
 export interface DbPoolCollectorOptions {
+  /**
+   * Lucid database connection name to monitor.
+   *
+   * Must match a key in your `config/database.ts` connections object.
+   *
+   * @default 'postgres'
+   */
   connectionName?: string
 }
 
+/**
+ * Monitors the Knex connection pool for a Lucid database connection.
+ *
+ * **Metrics produced:**
+ * - `dbPoolUsed` -- connections currently checked out
+ * - `dbPoolFree` -- idle connections available
+ * - `dbPoolPending` -- queries waiting for a connection
+ * - `dbPoolMax` -- maximum pool size
+ *
+ * Returns zeros if the connection or pool is unavailable.
+ *
+ * **Peer dependencies:** `@adonisjs/lucid`
+ *
+ * @example
+ * ```ts
+ * import { dbPoolCollector } from 'adonisjs-server-stats/collectors'
+ *
+ * dbPoolCollector()                                // monitor 'postgres'
+ * dbPoolCollector({ connectionName: 'mysql' })     // monitor 'mysql'
+ * ```
+ */
 export function dbPoolCollector(opts?: DbPoolCollectorOptions): MetricCollector {
   const connectionName = opts?.connectionName ?? 'postgres'
 

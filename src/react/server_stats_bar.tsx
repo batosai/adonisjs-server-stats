@@ -325,8 +325,37 @@ function StatsBarMetrics({
   )
 }
 
+/**
+ * Props for the {@link ServerStatsBar} component.
+ *
+ * All options are optional and passed through to {@link useServerStats}.
+ */
 export interface ServerStatsBarProps extends UseServerStatsOptions {}
 
+/**
+ * Drop-in server stats bar component for React applications.
+ *
+ * Renders a fixed bar at the bottom of the viewport showing all
+ * metrics with color-coded thresholds, sparklines, and hover tooltips.
+ * Includes a toggle button to show/hide (persisted via localStorage).
+ *
+ * Uses {@link useServerStats} internally for data fetching and SSE
+ * subscription.
+ *
+ * @example
+ * ```tsx
+ * import { ServerStatsBar } from 'adonisjs-server-stats/react'
+ *
+ * function AdminLayout({ children }) {
+ *   return (
+ *     <div>
+ *       {children}
+ *       <ServerStatsBar />
+ *     </div>
+ *   )
+ * }
+ * ```
+ */
 export function ServerStatsBar(props?: ServerStatsBarProps) {
   const { stats, stale, history } = useServerStats(props)
 

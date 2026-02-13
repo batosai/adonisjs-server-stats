@@ -1,5 +1,19 @@
 import type { MetricCollector } from './collector.js'
 
+/**
+ * Queries application-specific tables for user sessions,
+ * pending webhooks, and pending emails.
+ *
+ * Expects `sessions`, `webhook_events`, and `scheduled_emails` tables
+ * to exist. Missing tables are silently ignored (returns 0).
+ *
+ * **Metrics produced:**
+ * - `onlineUsers` -- active session count
+ * - `pendingWebhooks` -- webhook events awaiting delivery
+ * - `pendingEmails` -- scheduled emails awaiting send
+ *
+ * **Peer dependencies:** `@adonisjs/lucid`
+ */
 export function appCollector(): MetricCollector {
   return {
     name: 'app',
