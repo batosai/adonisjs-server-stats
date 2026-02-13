@@ -10,21 +10,21 @@ Zero frontend dependencies. Zero build step. Just `@serverStats()` and go.
 
 **Stats bar** -- always-on metrics strip at the bottom of every page:
 
-![Stats bar with live server metrics](screenshots/debug-queries.png)
+![Stats bar with live server metrics](https://raw.githubusercontent.com/simulieren/adonisjs-server-stats/main/screenshots/debug-queries.png)
 
 **Debug toolbar** -- expandable panels for deep inspection:
 
 | Queries | Events |
 |---------|--------|
-| ![Queries panel showing SQL queries with duration and model info](screenshots/debug-queries.png) | ![Events panel showing application events with payload data](screenshots/debug-events.png) |
+| ![Queries panel showing SQL queries with duration and model info](https://raw.githubusercontent.com/simulieren/adonisjs-server-stats/main/screenshots/debug-queries.png) | ![Events panel showing application events with payload data](https://raw.githubusercontent.com/simulieren/adonisjs-server-stats/main/screenshots/debug-events.png) |
 
 | Routes | Logs |
 |--------|------|
-| ![Routes panel showing all registered routes with handlers](screenshots/debug-routes.png) | ![Logs panel with level filtering and request ID correlation](screenshots/debug-logs.png) |
+| ![Routes panel showing all registered routes with handlers](https://raw.githubusercontent.com/simulieren/adonisjs-server-stats/main/screenshots/debug-routes.png) | ![Logs panel with level filtering and request ID correlation](https://raw.githubusercontent.com/simulieren/adonisjs-server-stats/main/screenshots/debug-logs.png) |
 
 | Emails (custom pane) |
 |----------------------|
-| ![Emails panel showing sent emails with delivery status](screenshots/debug-emails.png) |
+| ![Emails panel showing sent emails with delivery status](https://raw.githubusercontent.com/simulieren/adonisjs-server-stats/main/screenshots/debug-emails.png) |
 
 ## Features
 
