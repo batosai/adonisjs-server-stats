@@ -1,20 +1,42 @@
 # adonisjs-server-stats
 
-Real-time server monitoring for AdonisJS v6. Collects process, system, HTTP, database, Redis, queue, and log metrics via a pluggable collector architecture, then broadcasts them over SSE for live dashboard display.
+A Laravel Telescope-inspired dev toolbar and real-time server monitor for **AdonisJS v6**.
 
-Ships with an **Edge tag** (`@serverStats()`) -- self-contained HTML/CSS/JS, no build step needed.
+Drop a single Edge tag into your layout and get a live stats bar showing CPU, memory, requests/sec, database pool, Redis, queues, and logs -- plus a full debug toolbar with SQL query inspection, event tracing, route listing, live log tailing, and custom panels.
 
-### Stats Bar
+Zero frontend dependencies. Zero build step. Just `@serverStats()` and go.
 
-![Stats bar with server metrics](screenshots/debug-queries.png)
+## Screenshots
 
-### Dev Toolbar
+**Stats bar** -- always-on metrics strip at the bottom of every page:
 
-![Queries panel](screenshots/debug-queries.png)
-![Events panel](screenshots/debug-events.png)
-![Routes panel](screenshots/debug-routes.png)
-![Logs panel](screenshots/debug-logs.png)
-![Emails panel](screenshots/debug-emails.png)
+![Stats bar with live server metrics](screenshots/debug-queries.png)
+
+**Debug toolbar** -- expandable panels for deep inspection:
+
+| Queries | Events |
+|---------|--------|
+| ![Queries panel showing SQL queries with duration and model info](screenshots/debug-queries.png) | ![Events panel showing application events with payload data](screenshots/debug-events.png) |
+
+| Routes | Logs |
+|--------|------|
+| ![Routes panel showing all registered routes with handlers](screenshots/debug-routes.png) | ![Logs panel with level filtering and request ID correlation](screenshots/debug-logs.png) |
+
+| Emails (custom pane) |
+|----------------------|
+| ![Emails panel showing sent emails with delivery status](screenshots/debug-emails.png) |
+
+## Features
+
+- **Live stats bar** -- CPU, memory, event loop lag, HTTP throughput, DB pool, Redis, queues, logs
+- **Debug toolbar** -- SQL queries, events, routes, logs with search and filtering
+- **Custom panes** -- add your own tabs (webhooks, emails, cache, anything) with a simple config
+- **Pluggable collectors** -- use built-in collectors or write your own
+- **Visibility control** -- show only to admins, specific roles, or in dev mode
+- **SSE broadcasting** -- real-time updates via AdonisJS Transmit
+- **Prometheus export** -- expose all metrics as Prometheus gauges
+- **Self-contained** -- inline HTML/CSS/JS Edge tag, no React, no external assets
+- **Graceful degradation** -- missing optional dependencies are handled automatically
 
 ## Installation
 
@@ -273,7 +295,7 @@ When `shouldShow` is not set, the stats bar always renders.
 
 ## Edge Tag
 
-The `@serverStats()` Edge tag renders a self-contained stats bar with inline HTML, CSS, and JS -- no React, no external assets, no build step.
+The `@serverStats()` Edge tag renders a self-contained stats bar with inline HTML, CSS, and JS -- no external assets, no build step.
 
 ```edge
 <body>
