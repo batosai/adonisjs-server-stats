@@ -73,7 +73,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc",
+    "copy-assets": "cp -r src/stubs/config.stub dist/src/stubs/ && cp -r src/edge/views dist/src/edge/ && cp -r src/edge/client dist/src/edge/",
+    "build": "tsc && npm run copy-assets",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build",
     "typecheck": "tsc --noEmit"
@@ -122,6 +123,17 @@
   },
   "devDependencies": {
     "@adonisjs/core": "^6.0.0",
+    "@adonisjs/lucid": "^21.0.0",
+    "@adonisjs/redis": "^9.0.0",
+    "@adonisjs/transmit": "^1.0.0",
+    "@adonisjs/transmit-client": "^1.0.0",
+    "@julr/adonisjs-prometheus": "^1.4.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "axios": "^1.0.0",
+    "bullmq": "^5.0.0",
+    "edge.js": "^6.0.0",
+    "react": "^19.0.0",
     "typescript": "^5.9.0"
   }
 }
