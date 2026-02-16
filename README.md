@@ -89,6 +89,23 @@ server.use([
 ```ts
 // config/server_stats.ts
 import { defineConfig } from 'adonisjs-server-stats'
+import { processCollector, systemCollector, httpCollector } from 'adonisjs-server-stats/collectors'
+
+export default defineConfig({
+  collectors: [
+    processCollector(),
+    systemCollector(),
+    httpCollector(),
+  ],
+})
+```
+
+That's it -- this gives you CPU, memory, event loop lag, and HTTP throughput out of the box. All other options have sensible defaults. Add more collectors as needed:
+
+```ts
+// config/server_stats.ts
+import env from '#start/env'
+import { defineConfig } from 'adonisjs-server-stats'
 import {
   processCollector,
   systemCollector,
@@ -99,14 +116,12 @@ import {
   logCollector,
   appCollector,
 } from 'adonisjs-server-stats/collectors'
-import env from '#start/env'
 
 export default defineConfig({
   intervalMs: 3000,
   transport: 'transmit',
   channelName: 'admin/server-stats',
   endpoint: '/admin/api/server-stats',
-  shouldShow: (ctx) => !!ctx.auth?.user?.isAdmin,
   collectors: [
     processCollector(),
     systemCollector(),
@@ -133,7 +148,7 @@ export default defineConfig({
 // start/routes.ts
 router
   .get('/admin/api/server-stats', '#controllers/admin/server_stats_controller.index')
-  .use(middleware.superadmin())
+  .use(middleware.superadmin()) // Replace with your own middleware
 ```
 
 ### 5. Create the controller
@@ -278,23 +293,35 @@ interface MetricCollector {
 
 ## Visibility Control (`shouldShow`)
 
-Control who sees the stats bar via the `shouldShow` config callback. It receives the AdonisJS `HttpContext` and returns `true` to render.
+By default the stats bar renders for every request. Use `shouldShow` to restrict it. The callback receives the AdonisJS `HttpContext` and should return `true` to show the bar, `false` to hide it.
+
+Because `shouldShow` runs **after** middleware (including auth), you have full access to `ctx.auth`.
 
 ```ts
 export default defineConfig({
-  // Only admin users
-  shouldShow: (ctx) => !!ctx.auth?.user?.isAdmin,
-
-  // Only in development
-  shouldShow: () => process.env.NODE_ENV === 'development',
-
-  // Multiple roles
-  shouldShow: (ctx) =>
-    ctx.auth?.user?.role === 'admin' || ctx.auth?.user?.role === 'superadmin',
+  // Only show in development
+  shouldShow: () => env.get('NODE_ENV'),
 })
 ```
 
-When `shouldShow` is not set, the stats bar always renders.
+```ts
+export default defineConfig({
+  // Only show for logged-in admin users
+  shouldShow: (ctx) => ctx.auth?.user?.isAdmin === true,
+})
+```
+
+```ts
+export default defineConfig({
+  // Only show for specific roles
+  shouldShow: (ctx) => {
+    const role = ctx.auth?.user?.role
+    return role === 'admin' || role === 'superadmin'
+  },
+})
+```
+
+> **Tip:** When `shouldShow` is not set, the bar renders for everyone. In production you almost always want to set this.
 
 ---
 
